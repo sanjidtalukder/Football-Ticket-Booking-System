@@ -64,6 +64,112 @@ Stores ticket booking records for users and matches.
 - Subqueries with aggregate functions
 - Sorting, `LIMIT`, and `OFFSET`
 
+## Sample Queries
+
+### Query 1: Available Champions League Matches
+
+Retrieves all upcoming football matches from the `Champions League` where tickets are currently available.
+
+```sql
+SELECT
+    match_id,
+    fixture,
+    base_ticket_price
+FROM matches
+WHERE tournament_category = 'Champions League'
+  AND match_status = 'Available';
+```
+
+### Query 2: Search Users by Name
+
+Searches for users whose full names start with `Tanvir` or contain `Haque`, using case-insensitive matching.
+
+```sql
+SELECT
+    user_id,
+    full_name,
+    email
+FROM users
+WHERE full_name ILIKE 'Tanvir%'
+   OR full_name ILIKE '%Haque%';
+```
+
+### Query 3: Pending Payment Action
+
+Finds bookings where the payment status is missing and displays `Action Required` instead of `NULL`.
+
+```sql
+SELECT
+    booking_id,
+    user_id,
+    match_id,
+    COALESCE(payment_status, 'Action Required') AS systematic_status
+FROM bookings
+WHERE payment_status IS NULL;
+```
+
+### Query 4: Booking Details with User and Match
+
+Shows booking details together with the user's full name and match fixture.
+
+```sql
+SELECT
+    b.booking_id,
+    u.full_name,
+    m.fixture,
+    b.total_cost
+FROM bookings b
+INNER JOIN users u
+    ON b.user_id = u.user_id
+INNER JOIN matches m
+    ON b.match_id = m.match_id;
+```
+
+### Query 5: All Users with Booking IDs
+
+Displays every user and their booking ID, including users who have not booked any ticket yet.
+
+```sql
+SELECT
+    u.user_id,
+    u.full_name,
+    b.booking_id
+FROM users u
+LEFT JOIN bookings b
+    ON u.user_id = b.user_id;
+```
+
+### Query 6: Above Average Booking Cost
+
+Finds bookings where the total cost is greater than the average booking cost.
+
+```sql
+SELECT
+    booking_id,
+    match_id,
+    total_cost
+FROM bookings
+WHERE total_cost >
+(
+    SELECT AVG(total_cost)
+    FROM bookings
+);
+```
+
+### Query 7: Top Expensive Matches with Offset
+
+Retrieves the top 2 most expensive matches after skipping the highest priced match.
+
+```sql
+SELECT
+    match_id,
+    fixture,
+    base_ticket_price
+FROM matches
+ORDER BY base_ticket_price DESC
+LIMIT 2 OFFSET 1;
+```
+
 ## How to Run
 
 1. Open PostgreSQL or pgAdmin 4.
