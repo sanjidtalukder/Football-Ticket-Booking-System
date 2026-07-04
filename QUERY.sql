@@ -1,15 +1,5 @@
--- ==========================================================
--- Football Ticket Booking System
--- QUERY.sql
--- Author: Sanjid Talukder
--- ==========================================================
 
-
--- ==========================================================
 -- Query 1
--- Retrieve all upcoming football matches belonging to the
--- 'Champions League' where the match status is 'Available'.
--- ==========================================================
 
 SELECT
     match_id,
@@ -20,12 +10,7 @@ WHERE tournament_category = 'Champions League'
   AND match_status = 'Available';
 
 
-
--- ==========================================================
 -- Query 2
--- Search for all users whose full names start with 'Tanvir'
--- or contain the phrase 'Haque' (case-insensitive).
--- ==========================================================
 
 SELECT
     user_id,
@@ -37,11 +22,7 @@ WHERE full_name ILIKE 'Tanvir%'
 
 
 
--- ==========================================================
 -- Query 3
--- Retrieve booking records where payment status is NULL,
--- replacing NULL with 'Action Required'.
--- ==========================================================
 
 SELECT
     booking_id,
@@ -53,11 +34,7 @@ WHERE payment_status IS NULL;
 
 
 
--- ==========================================================
 -- Query 4
--- Retrieve booking details with user's full name
--- and match fixture.
--- ==========================================================
 
 SELECT
     b.booking_id,
@@ -72,11 +49,7 @@ INNER JOIN matches m
 
 
 
--- ==========================================================
 -- Query 5
--- Display all users and their booking IDs,
--- including users who have never booked a ticket.
--- ==========================================================
 
 SELECT
     u.user_id,
@@ -88,11 +61,8 @@ LEFT JOIN bookings b
 
 
 
--- ==========================================================
+
 -- Query 6
--- Find all bookings where total cost is
--- greater than the average booking cost.
--- ==========================================================
 
 SELECT
     booking_id,
@@ -107,11 +77,8 @@ WHERE total_cost >
 
 
 
--- ==========================================================
+
 -- Query 7
--- Retrieve the top 2 most expensive matches,
--- skipping the highest priced match.
--- ==========================================================
 
 SELECT
     match_id,
