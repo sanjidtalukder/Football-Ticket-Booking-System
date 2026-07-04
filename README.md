@@ -3,7 +3,6 @@
 ## ERD Design
 
 ![Football Ticket Booking System ERD](./Design%20the%20ERD.drawio.png)
-<img src="./Design%20the%20ERD.drawio.png" alt="Football Ticket Booking System ERD" width="100%">
 
 ## Project Overview
 
